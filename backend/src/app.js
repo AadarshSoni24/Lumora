@@ -50,6 +50,15 @@ app.get("/health", (req, res) => {
   res.json({ success: true, status: "ok", message: "Lumora API is healthy" });
 });
 
+app.get("/debug", (req, res) => {
+  const env = require("./config/env");
+  res.json({
+    dbHost: env.db.host,
+    poolHost: require("./config/database").pool.config.connectionConfig.host,
+    envDbHost: process.env.DB_HOST
+  });
+});
+
 app.use("/api/v1", routes);
 
 // Serve React built static assets
