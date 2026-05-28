@@ -14,4 +14,14 @@ router.get("/:id", optionalAuthenticate, validate(imageValidation.imageId), imag
 router.delete("/:id", authenticate, validate(imageValidation.imageId), imageController.deleteImage);
 router.get("/admin/seed-indian-50", require("../controllers/seedController").seedIndian);
 
+router.get("/admin/nuke-bad", async (req, res) => {
+  try {
+    const { pool } = require("../config/database");
+    await pool.query("DELETE FROM images WHERE title LIKE '%Virat%' OR title LIKE '%Spice%' OR title LIKE '%Mehndi%'");
+    res.json({ success: true, message: "Nuked bad images!" });
+  } catch(e) {
+    res.json({ error: e.message });
+  }
+});
+
 module.exports = router;
