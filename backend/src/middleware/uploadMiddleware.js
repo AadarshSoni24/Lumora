@@ -73,14 +73,14 @@ const uploadImage = multer({
   }
 }).single("image");
 
-const { fileTypeFromFile } = require("file-type");
+const { fromFile } = require("file-type");
 
 const validateMagicBytes = async (req, res, next) => {
   if (!req.file) return next();
   
   try {
     if (req.file.path) {
-      const type = await fileTypeFromFile(req.file.path);
+      const type = await fromFile(req.file.path);
       if (!type || !type.mime.startsWith("image/")) {
         const fs = require("fs");
         if (fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
