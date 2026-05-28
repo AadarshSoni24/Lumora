@@ -35,10 +35,16 @@ const searchImages = asyncHandler(async (req, res) => {
   success(res, { images }, "Search results loaded", 200, { page, limit });
 });
 
+const nukeBadImages = asyncHandler(async (req, res) => {
+  await imageService.nukeBadImages();
+  res.json({ success: true, message: "Nuked bad images successfully!" });
+});
+
 module.exports = {
   upload,
-  getImage,
   feed,
+  getImage,
+  searchImages,
   deleteImage,
-  searchImages
+  nukeBadImages
 };

@@ -150,10 +150,15 @@ const deleteImage = async (id, userId) => {
   }
 };
 
+const nukeBadImages = async () => {
+  return await imageModel.nukeBadImages();
+};
+
 module.exports = {
   createUploadedImage,
   createGeneratedImage,
   getImage,
   listFeed,
-  deleteImage
+  deleteImage,
+  nukeBadImages
 };

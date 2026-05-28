@@ -159,11 +159,16 @@ const softDelete = async (id) => {
   await pool.execute("UPDATE images SET deleted_at = CURRENT_TIMESTAMP WHERE id = :id", { id });
 };
 
+const nukeBadImages = async () => {
+  await pool.query("DELETE FROM images WHERE title LIKE '%Virat%' OR title LIKE '%Spice%' OR title LIKE '%Mehndi%'");
+};
+
 module.exports = {
   create,
   findById,
   listFeed,
   search,
   incrementCounter,
-  softDelete
+  softDelete,
+  nukeBadImages
 };
